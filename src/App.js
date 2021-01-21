@@ -2,6 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Button, Container, Row, Col } from 'react-bootstrap';
+import SearchBar from './components/SearchBar';
 
 
 function App() {
@@ -17,9 +18,10 @@ function App() {
         </Row>
         <Row>
           <Col md={4} className="sidebar">
-            <Button variant="outline-warning">Create Note</Button>
+            <SearchBar />
           </Col>
           <Col md={8} className="main">
+            <Button variant="outline-warning">Create Note</Button>
           </Col>
         </Row>
       </Container>

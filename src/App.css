@@ -22,10 +22,13 @@
 
 .sidebar {
   background-color: blanchedalmond;
+  padding: 15px;
+  text-align: center;
 }
 
 .main {
   background-color: lightgray;
+  padding: 15px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
