@@ -1,10 +1,31 @@
 .App {
   text-align: center;
+  padding-top: 10vh;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.note-container {
+  background-color: lightgrey;
+} 
+
+.note-header {
+  background-color: rgb(248, 219, 91);
+  padding: 10px;
+  font-weight: 700;
+  font-size: 20px;
+  color: black;
+}
+
+.sidebar {
+  background-color: blanchedalmond;
+}
+
+.main {
+  background-color: lightgray;
 }
 
 @media (prefers-reduced-motion: no-preference) {
