@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 
 import SearchBar from "./components/SearchBar";
@@ -17,6 +17,27 @@ function App() {
   const [notes, setNotes] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [noteShowed, setNoteShowed] = useState({});
+
+  const inputTitleHandler = (e) => {
+    setInputTitle(e.target.value);
+  }
+  
+  const inputContentHandler = (e) => {
+    setInputContent(e.target.value);
+  }
+
+  const submitNoteHandler = (e) => {
+    e.preventDefault();
+
+    setNotes([
+      ...notes, {title: inputTitle, content: inputContent}
+    ]);
+
+    setNoteShowed({title: inputTitle, content: inputContent});
+    setInputTitle("");
+    setInputContent("");
+    setShowForm(false);
+  }
 
   return (
     <div className="App">
@@ -40,14 +61,11 @@ function App() {
             </div>
             {showForm ? 
               <NoteForm 
-                notes={notes}
-                setNotes={setNotes} 
                 inputTitle={inputTitle}
-                setInputTitle={setInputTitle}
                 inputContent={inputContent}
-                setInputContent={setInputContent}
-                setShowForm={setShowForm}
-                setNoteShowed={setNoteShowed}/> : 
+                inputTitleHandler={inputTitleHandler}
+                inputContentHandler={inputContentHandler}
+                submitNoteHandler={submitNoteHandler}/> : 
               <NoteItem noteShowed={noteShowed} />}
           </Col>
         </Row>
