@@ -1,18 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
+
 import SearchBar from "./components/SearchBar";
 import NoteForm from "./components/NoteForm";
 import NoteList from "./components/NoteList";
+import NoteItem from "./components/NoteItem";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
+
   // States
   const [inputTitle, setInputTitle] = useState("");
   const [inputContent, setInputContent] = useState("");
   const [notes, setNotes] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [noteShowed, setNoteShowed] = useState({});
 
   return (
     <div className="App">
@@ -41,7 +45,10 @@ function App() {
                 inputTitle={inputTitle}
                 setInputTitle={setInputTitle}
                 inputContent={inputContent}
-                setInputContent={setInputContent}/> : null}
+                setInputContent={setInputContent}
+                setShowForm={setShowForm}
+                setNoteShowed={setNoteShowed}/> : 
+              <NoteItem noteShowed={noteShowed} />}
           </Col>
         </Row>
       </Container>

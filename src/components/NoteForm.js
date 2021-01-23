@@ -1,26 +1,27 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 
-const NoteForm = ({ notes, setNotes, inputTitle, setInputTitle, inputContent, setInputContent })  => {
+const NoteForm = ( props ) => {
 
   const inputTitleHandler = (e) => {
-    setInputTitle(e.target.value);
+    props.setInputTitle(e.target.value);
   }
   
   const inputContentHandler = (e) => {
-    setInputContent(e.target.value);
+    props.setInputContent(e.target.value);
   }
 
   const submitNoteHandler = (e) => {
     e.preventDefault();
 
-    setNotes([
-      ...notes, {title: inputTitle, content: setInputContent}
+    props.setNotes([
+      ...props.notes, {title: props.inputTitle, content: props.inputContent}
     ]);
 
-    console.log(notes);
-    setInputTitle("");
-    setInputContent("");
+    props.setNoteShowed({title: props.inputTitle, content: props.inputContent});
+    props.setInputTitle("");
+    props.setInputContent("");
+    props.setShowForm(false);
   }
 
   return (
@@ -29,7 +30,8 @@ const NoteForm = ({ notes, setNotes, inputTitle, setInputTitle, inputContent, se
         <Form.Label>Title</Form.Label>
         <Form.Control 
           placeholder="Enter title here" 
-          value={inputTitle} 
+          value={props.inputTitle} 
+          autoComplete="off"
           onChange={inputTitleHandler}/>
       </Form.Group>
       <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -38,7 +40,7 @@ const NoteForm = ({ notes, setNotes, inputTitle, setInputTitle, inputContent, se
           as="textarea"
           rows={12}
           placeholder="Enter your notes here"
-          value={inputContent}
+          value={props.inputContent}
           onChange={inputContentHandler}
         />
       </Form.Group>
