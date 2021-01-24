@@ -29,14 +29,21 @@ function App() {
   const submitNoteHandler = (e) => {
     e.preventDefault();
 
-    setNotes([
-      ...notes, {title: inputTitle, content: inputContent}
-    ]);
+    const newID = Math.random() * 1000;
 
-    setNoteShowed({title: inputTitle, content: inputContent});
+    setNotes([
+      ...notes, {title: inputTitle, content: inputContent, id: newID}
+    ]);
+    
+    setNoteShowed({title: inputTitle, content: inputContent, id: newID});
     setInputTitle("");
     setInputContent("");
     setShowForm(false);
+  }
+
+  const showNoteHandler = (e) => {
+    const key = e.target.id;
+    console.log("You clicked item with key ", key);
   }
 
   return (
@@ -51,7 +58,7 @@ function App() {
           <Col md={4} className="sidebar">
             <SearchBar />
             <h5 className="font-weight-bold pt-3">All notes</h5>
-            <NoteList notes={notes}/>
+            <NoteList notes={notes} showNoteHandler={showNoteHandler}/>
           </Col>
           <Col md={8} className="main">
             <div className="text-right">
