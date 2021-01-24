@@ -29,10 +29,18 @@
   height: 600px;
 }
 
+.note-list-item {
+  cursor: pointer;
+}
+
 .main {
   background-color: lightgray;
-  padding: 15px;
+  padding: 20px;
   text-align: left;
+}
+
+.note-item {
+  padding: 15px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
