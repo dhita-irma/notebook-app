@@ -16,8 +16,9 @@ function App() {
   const [inputContent, setInputContent] = useState("");
   const [notes, setNotes] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [noteShowed, setNoteShowed] = useState({});
+  const [noteShowed, setNoteShowed] = useState([]);
 
+  // Handlers
   const inputTitleHandler = (e) => {
     setInputTitle(e.target.value);
   }
@@ -42,8 +43,8 @@ function App() {
   }
 
   const showNoteHandler = (e) => {
-    const key = e.target.id;
-    console.log("You clicked item with key ", key);
+    const id = e.target.id;
+    setNoteShowed(notes.find(note => note.id == id));
   }
 
   return (
