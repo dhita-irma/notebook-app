@@ -56,6 +56,11 @@ function App() {
     setNoteShowed(notes.find(note => note.id == id));
   }
 
+  const deleteNoteHandler = (id) => {
+    setNotes(notes.filter(note => note.id != id));
+    setNoteShowed([]);
+  }
+
   // Save to local storage
   const saveLocalNotes = () => {
     localStorage.setItem('notes', JSON.stringify(notes));
@@ -97,7 +102,9 @@ function App() {
                 inputTitleHandler={inputTitleHandler}
                 inputContentHandler={inputContentHandler}
                 submitNoteHandler={submitNoteHandler}/> : 
-              <NoteItem noteShowed={noteShowed} />}
+              <NoteItem 
+                noteShowed={noteShowed}
+                deleteNoteHandler={() => deleteNoteHandler(noteShowed.id)}/>}
           </Col>
         </Row>
       </Container>
