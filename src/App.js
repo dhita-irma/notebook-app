@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 
 import SearchBar from "./components/SearchBar";
@@ -17,6 +17,15 @@ function App() {
   const [notes, setNotes] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [noteShowed, setNoteShowed] = useState([]);
+
+  // useEffect
+  useEffect(() => {
+    getLocalNotes();
+  }, []);
+
+  useEffect(() => {
+    saveLocalNotes();
+  }, [notes]);
 
   // Handlers
   const inputTitleHandler = (e) => {
@@ -46,6 +55,20 @@ function App() {
     const id = e.target.id;
     setNoteShowed(notes.find(note => note.id == id));
   }
+
+  // Save to local storage
+  const saveLocalNotes = () => {
+    localStorage.setItem('notes', JSON.stringify(notes));
+  };
+
+  const getLocalNotes = () => {
+    if (localStorage.getItem('notes') === null) {
+      localStorage.setItem('notes', JSON.stringify([]));
+    } else {
+      let notesLocal = JSON.parse(localStorage.getItem('notes'));
+      setNotes(notesLocal);
+    }
+  };
 
   return (
     <div className="App">
