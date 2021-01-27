@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 
 import SearchBar from "./components/SearchBar";
@@ -16,8 +16,18 @@ function App() {
   const [inputContent, setInputContent] = useState("");
   const [notes, setNotes] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [noteShowed, setNoteShowed] = useState({});
+  const [noteShowed, setNoteShowed] = useState([]);
 
+  // useEffect
+  useEffect(() => {
+    getLocalNotes();
+  }, []);
+
+  useEffect(() => {
+    saveLocalNotes();
+  }, [notes]);
+
+  // Handlers
   const inputTitleHandler = (e) => {
     setInputTitle(e.target.value);
   }
@@ -42,9 +52,39 @@ function App() {
   }
 
   const showNoteHandler = (e) => {
-    const key = e.target.id;
-    console.log("You clicked item with key ", key);
+    const id = e.target.id;
+    // eslint-disable-next-line
+    setNoteShowed(notes.find(note => note.id == id));
+    
+    // Set form value
+    const note = notes.find(note => note.id == id);
+    setInputTitle(note.title);
+    setInputContent(note.content);
   }
+
+  const showFormHandler = () => {
+    setShowForm(!showForm);
+  }
+
+  const deleteNoteHandler = (id) => {
+    // eslint-disable-next-line
+    setNotes(notes.filter(note => note.id != id));
+    setNoteShowed([]);
+  }
+
+  // Save to local storage
+  const saveLocalNotes = () => {
+    localStorage.setItem('notes', JSON.stringify(notes));
+  };
+
+  const getLocalNotes = () => {
+    if (localStorage.getItem('notes') === null) {
+      localStorage.setItem('notes', JSON.stringify([]));
+    } else {
+      let notesLocal = JSON.parse(localStorage.getItem('notes'));
+      setNotes(notesLocal);
+    }
+  };
 
   return (
     <div className="App">
@@ -62,7 +102,7 @@ function App() {
           </Col>
           <Col md={8} className="main">
             <div className="text-right">
-              <Button variant="warning" onClick={() => setShowForm(!showForm)}>
+              <Button variant="warning" onClick={showFormHandler}>
                 {showForm ? "Back" : "Create"}
               </Button>
             </div>
@@ -73,7 +113,10 @@ function App() {
                 inputTitleHandler={inputTitleHandler}
                 inputContentHandler={inputContentHandler}
                 submitNoteHandler={submitNoteHandler}/> : 
-              <NoteItem noteShowed={noteShowed} />}
+              <NoteItem 
+                noteShowed={noteShowed}
+                showFormHandler={showFormHandler}
+                deleteNoteHandler={() => deleteNoteHandler(noteShowed.id)}/>}
           </Col>
         </Row>
       </Container>
