@@ -41,6 +41,7 @@
 
 .note-item {
   padding: 15px;
+  white-space: pre-wrap;
 }
 
 @media (prefers-reduced-motion: no-preference) {

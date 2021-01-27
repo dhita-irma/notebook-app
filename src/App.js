@@ -53,10 +53,21 @@ function App() {
 
   const showNoteHandler = (e) => {
     const id = e.target.id;
+    // eslint-disable-next-line
     setNoteShowed(notes.find(note => note.id == id));
+    
+    // Set form value
+    const note = notes.find(note => note.id == id);
+    setInputTitle(note.title);
+    setInputContent(note.content);
+  }
+
+  const showFormHandler = () => {
+    setShowForm(!showForm);
   }
 
   const deleteNoteHandler = (id) => {
+    // eslint-disable-next-line
     setNotes(notes.filter(note => note.id != id));
     setNoteShowed([]);
   }
@@ -91,7 +102,7 @@ function App() {
           </Col>
           <Col md={8} className="main">
             <div className="text-right">
-              <Button variant="warning" onClick={() => setShowForm(!showForm)}>
+              <Button variant="warning" onClick={showFormHandler}>
                 {showForm ? "Back" : "Create"}
               </Button>
             </div>
@@ -104,6 +115,7 @@ function App() {
                 submitNoteHandler={submitNoteHandler}/> : 
               <NoteItem 
                 noteShowed={noteShowed}
+                showFormHandler={showFormHandler}
                 deleteNoteHandler={() => deleteNoteHandler(noteShowed.id)}/>}
           </Col>
         </Row>
